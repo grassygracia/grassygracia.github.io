@@ -1,24 +1,43 @@
 <html>
     <head>
         <script src= "https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.3.1/addons/p5.sound.min.js"></script>
+        <script src= "https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.3.1/p5.min.js"></script>
+        <script src= "https://cdn.jsdelivr.net/npm/p5.collide2d"></script>
+        <script src = "https://unpkg.com/p5.collide2d"></script>
         <body>
 
             <script>
+              
                 var h = innerHeight; 
                 var w = innerWidth;
                 var player;
                 var badguy;
+                var timer= 0;
+                var hit = false
+                function preload(){
+                    soundFormats("mp3");
+                    levelup= loadSound("levelup.mp3")
+                }
                 function setup(){
                     createCanvas(w,h)
                     player= new player();
-                    badguy
+                    badguy = new badguy();
                 }
                 function draw(){
+                    clear();
                     player.show();
                     player.update();
+                    badguy.show();
+                    badguy.update();
                     if (keyIsDown(32)){
                         player.jump();
                     }
+                    hit = collideRectEllipse(badguy.x, badguy.y, 50, 50, player.x, player.y,50,50);
+                    if(hit==true){
+                       score++
+                       levelup.play();
+                    }
+                    
                 }
                 function player(){
                     player.x= w - 25
@@ -53,6 +72,21 @@
                     }
                     player.jump = function(){
                         player.velocity += player.lift;
+                    }
+                }
+                function badguy(){
+                    badguy.x= random(50, w-50);
+                    badguy.y= random(50, h-50);
+                    badguy.show= function(){
+                        fill(color('blue'));
+                        rect(badguy.x,badguy.y,50,50);
+                    }
+                    player.update= function(){
+                        if(millis()>= 1000+ timer){
+                            badguy.x= random(50, w-50);
+                        badguy.y = random(50, h-50);
+                    timer= millis();                        
+                }
                     }
                 }
             </script>
