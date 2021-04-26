@@ -1,0 +1,61 @@
+<html>
+    <head>
+        <script src= "https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.3.1/addons/p5.sound.min.js"></script>
+        <body>
+
+            <script>
+                var h = innerHeight; 
+                var w = innerWidth;
+                var player;
+                var badguy;
+                function setup(){
+                    createCanvas(w,h)
+                    player= new player();
+                    badguy
+                }
+                function draw(){
+                    player.show();
+                    player.update();
+                    if (keyIsDown(32)){
+                        player.jump();
+                    }
+                }
+                function player(){
+                    player.x= w - 25
+                    player.y = h - 25
+                    player.gravity= 0.5;
+                    player.lift= -3
+                    player.velocity= 0;
+                    player.show = function(){
+                        fill(color('red'));
+                        ellipse(player.x,player.y,50,50);
+                        if( (player.x<0) || (player.x> w) || (player.y<0) || (player.y > h) ){
+                            player.x= w-25
+                            player.y= h-25
+                        }
+                        //move left with a
+                        if (keyIsDown(65)){
+                            player.x = player.x -=10
+                        }
+                        //move right with d
+                        if (keyIsDown(68)){
+                            player.x = player.x +=10
+                        }
+                    }
+                    player.update= function(){
+                        player.velocity += player.gravity;
+                        player.y += player.velocity;
+                        player.velocity *=0.9;
+                        if (player.y> h -25){
+                            player.y = h-25
+                            player.velocity = -10;
+                        }
+                    }
+                    player.jump = function(){
+                        player.velocity += player.lift;
+                    }
+                }
+            </script>
+        </body>
+    </head>
+</html>
