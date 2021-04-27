@@ -14,6 +14,7 @@
                 var badguy;
                 var timer= 0;
                 var hit = false
+                var score= 0; 
                 function preload(){
                     soundFormats("mp3");
                     levelup= loadSound("levelup.mp3")
@@ -24,6 +25,7 @@
                     badguy = new badguy();
                 }
                 function draw(){
+                    background(51)
                     clear();
                     player.show();
                     player.update();
@@ -36,6 +38,7 @@
                     if(hit==true){
                        score++
                        levelup.play();
+                       background(255,204,0)
                     }
                     
                 }
@@ -89,6 +92,7 @@
                 }
                     }
                 }
+                <font face="Tahoma" color= "black"><span id = "score"></span></font>
             </script>
         </body>
     </head>
